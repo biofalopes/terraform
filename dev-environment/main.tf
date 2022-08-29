@@ -88,16 +88,6 @@ resource "aws_instance" "biofa_node" {
     volume_size = 10
   }
 
-  provisioner "local-exec" {
-    command = templatefile("${var.host_os}-ssh-config.tpl", {
-      hostname     = self.public_ip,
-      user         = "ubuntu",
-      identityfile = "~/.ssh/id_rsa"
-    })
-    interpreter = var.host_os == "windows" ? ["powershell", "-Command"] : ["bash", "-c"]
-
-  }
-
   tags = {
     Name = "biofa-node"
   }
